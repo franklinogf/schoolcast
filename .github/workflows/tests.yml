@@ -41,8 +41,9 @@ jobs:
         uses: mirromutth/mysql-action@v1.1
         with:
           mysql database: 'tenant_tests_main'
+          mysql root password: ''
           mysql user: 'root'
-          mysql password: ''
+          mysql password: '123456'
 
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
