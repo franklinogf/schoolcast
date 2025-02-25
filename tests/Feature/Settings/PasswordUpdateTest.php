@@ -5,9 +5,9 @@ namespace Tests\Feature\Settings;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
-use Tests\TestCase;
+use Tests\TenantCase;
 
-class PasswordUpdateTest extends TestCase
+class PasswordUpdateTest extends TenantCase
 {
     use RefreshDatabase;
 

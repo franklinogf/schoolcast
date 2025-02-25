@@ -6,9 +6,9 @@ use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
-use Tests\TestCase;
+use Tests\TenantCase;
 
-class PasswordResetTest extends TestCase
+class PasswordResetTest extends TenantCase
 {
     use RefreshDatabase;
 
