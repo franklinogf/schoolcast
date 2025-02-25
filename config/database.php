@@ -117,7 +117,7 @@ return [
             'driver' => 'mysql',
             'database' => 'tenant_tests_main',
             'username' => 'root',
-            'password' => '',
+            'password' => '123456',
             'charset' => env('DB_CHARSET', 'utf8mb4'),
             'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
             'prefix' => '',
