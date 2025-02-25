@@ -37,12 +37,16 @@ jobs:
       - name: Build Assets
         run: npm run build
 
-      - name: Create SQLite Database
-        run: touch database/database.sqlite
+      - name: Setup MySQL
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          mysql database: 'tenant_tests_main'
+          mysql user: 'root'
+          mysql password: ''
 
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
-
+        
       - name: Copy Environment File
         run: cp .env.example .env
 
