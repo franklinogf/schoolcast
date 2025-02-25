@@ -25,7 +25,12 @@ Route::middleware([
     InitializeTenancyByPath::class,
     SetDefaultTenant::class,
     // PreventAccessFromCentralDomains::class,
-])->prefix('/{tenant}')->group(function () {
+])->prefix('/{tenant}/')->group(function () {
+
+    Route::get('/', function () {
+
+        return Inertia::render('welcome');
+    })->name('home');
 
     Route::middleware(['auth'])->group(function () {
         Route::get('dashboard', function () {
