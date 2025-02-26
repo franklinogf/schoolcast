@@ -29,7 +29,8 @@ abstract class TenantCase extends BaseTestCase
         tenancy()->initialize($tenant);
 
         // URL::forceRootUrl("http://{$this->tenantId}.localhost:8000");
-        URL::forceRootUrl(config('app.url')."/{$this->tenantId}");
+        URL::defaults(['tenant' => $this->tenantId]);
+        // URL::forceRootUrl(config('app.url')."/{$this->tenantId}");
 
     }
 }

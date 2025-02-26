@@ -17,8 +17,8 @@ class PasswordUpdateTest extends TenantCase
 
         $response = $this
             ->actingAs($user)
-            ->from('/settings/password')
-            ->put('/settings/password', [
+            ->from(route('password.edit'))
+            ->put(route('password.update'), [
                 'current_password' => 'password',
                 'password' => 'new-password',
                 'password_confirmation' => 'new-password',
@@ -26,7 +26,7 @@ class PasswordUpdateTest extends TenantCase
 
         $response
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/settings/password');
+            ->assertRedirect(route('password.edit'));
 
         $this->assertTrue(Hash::check('new-password', $user->refresh()->password));
     }
@@ -37,8 +37,8 @@ class PasswordUpdateTest extends TenantCase
 
         $response = $this
             ->actingAs($user)
-            ->from('/settings/password')
-            ->put('/settings/password', [
+            ->from(route('password.edit'))
+            ->put(route('password.update'), [
                 'current_password' => 'wrong-password',
                 'password' => 'new-password',
                 'password_confirmation' => 'new-password',
@@ -46,6 +46,6 @@ class PasswordUpdateTest extends TenantCase
 
         $response
             ->assertSessionHasErrors('current_password')
-            ->assertRedirect('/settings/password');
+            ->assertRedirect(route('password.edit'));
     }
 }
