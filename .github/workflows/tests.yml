@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql
         env:
           MYSQL_DATABASE: test_db
           MYSQL_USER: user
@@ -65,8 +65,8 @@ jobs:
 
       - name: Tests
         env:
+          DB_CONNECTION: tests
           DB_DATABASE_TEST: test_db
-          DB_USER_TEST: user
-          DB_PASSWORD_TEST: secret
-          DB_ROOT_PASSWORD_TEST: secretroot
+          DB_USER_TEST: root
+          DB_PASSWORD_TEST: secretroot
         run: ./vendor/bin/phpunit
