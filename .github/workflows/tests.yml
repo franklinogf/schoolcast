@@ -13,10 +13,27 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: test_db
+          MYSQL_USER: user
+          MYSQL_PASSWORD: secret
+          MYSQL_ROOT_PASSWORD: secretroot
+        ports:
+            - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Verify MySQL connection
+        run: |
+          mysql --version
+          sudo apt-get install -y mysql-client
+          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uuser -psecret -e "SHOW DATABASES"
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -37,22 +54,19 @@ jobs:
       - name: Build Assets
         run: npm run build
 
-      - name: Setup MySQL
-        uses: mirromutth/mysql-action@v1.1
-        with:
-          mysql database: 'tenant_tests_main'
-          mysql root password: ''
-          mysql user: 'root'
-          mysql password: '123456'
-
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
-        
+
       - name: Copy Environment File
-        run: cp .env.example .env
+        run: cp .env.tests .env
 
       - name: Generate Application Key
         run: php artisan key:generate
 
       - name: Tests
+        env:
+          DB_DATABASE_TEST: test_db
+          DB_USER_TEST: user
+          DB_PASSWORD_TEST: secret
+          DB_ROOT_PASSWORD_TEST: secretroot
         run: ./vendor/bin/phpunit
